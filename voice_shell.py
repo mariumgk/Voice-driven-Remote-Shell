@@ -1,10 +1,17 @@
+import pyttsx3
 import speech_recognition as sr
 from command_executor import parse_text_to_command, run_command
 
-def listen_and_recognize() -> str | None:
+engine = pyttsx3.init()
+
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+def listen_and_recognize():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("\nListening... speak now.")
+        print("Listening...")
         r.adjust_for_ambient_noise(source, duration=0.5)
         audio = r.listen(source)
 
@@ -13,12 +20,20 @@ def listen_and_recognize() -> str | None:
         print("You said:", text)
         return text
     except sr.UnknownValueError:
-        print("Sorry, I could not understand the audio.")
-    except sr.RequestError as e:
-        print("API error:", e)
+        print("Could not understand.")
+        return None
+    except sr.RequestError:
+        print("API error.")
         return None
 
+
 def main():
+    speak("Hi")
+    speak(" I am Voice Driven Shell System\n")
+    speak("Built by Mariyum\n")
+    speak(" WahFah\n")
+    speak("\n and Mohmeenah")
+    
     print("=== Voice Shell (Level 1) ===")
     print("Commands (speak in English):")
     print("  'list files' / 'show files'")
@@ -32,10 +47,10 @@ def main():
     print("  'who am I'")
     print("  'cpu information'")
     print("  'kernel version'")
-
+    
     while True:
-        user = input("[Enter to speak / 'exit' to quit]: ").strip().lower()
-        if user == "exit":
+        user = input("[ENTER to speak] ")
+        if user.lower() == "exit":
             break
 
         spoken = listen_and_recognize()
@@ -44,9 +59,13 @@ def main():
 
         args = parse_text_to_command(spoken)
         if args is None:
-            print("I couldn't map that speech to a known command.")
+            print("Unknown command.")
+            speak("Sorry, I did not understand the command")
+          
         else:
             run_command(args)
+            speak("Command executed successfully")
+
 
 if __name__ == "__main__":
     main()
