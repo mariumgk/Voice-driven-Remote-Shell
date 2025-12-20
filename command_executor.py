@@ -24,31 +24,31 @@ def parse_text_to_command(text: str):
         return ["cat", filename]
 
     # 5. show date
-    if text in {"show date", "current date", "system time"}:
+    if text in {"show date", "current date", "system time", "date"}:
         return ["date"]
 
     # 6. disk usage
-    if text in {"disk usage", "show disk space", "storage usage"}:
+    if text in {"disk usage", "show disk space", "storage usage", "df", "-h"}:
         return ["df", "-h"]
 
     # 7. memory usage
-    if text in {"memory usage", "show memory", "ram usage"}:
+    if text in {"memory usage", "show memory", "ram usage", "free", "-h"}:
         return ["free", "-h"]
 
     # 8. running processes
-    if text in {"show processes", "list processes", "running process"}:
+    if text in {"show processes", "list processes", "running process", "ps", "aux"}:
         return ["ps", "aux"]
 
     # 9. current user
-    if text in {"who am i", "my username", "current user"}:
+    if text in {"who am i", "my username", "current user", "whoami", "who am i"}:
         return ["whoami"]
 
     # 10. CPU information
-    if text in {"cpu information", "cpu details", "processor info"}:
+    if text in {"cpu information", "cpu details", "processor info", "lscpu"}:
         return ["lscpu"]
 
     # 11. kernel & OS info
-    if text in {"kernel version", "system information", "os version"}:
+    if text in {"kernel version", "system information", "os version", "uname", "-a"}:
         return ["uname", "-a"]
 
     return None
